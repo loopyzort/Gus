@@ -31,8 +31,7 @@ public class UserRepositoryImplTest {
 
     private static final String USER_LOGIN_LOOPYZORT = "loopyzort";
     private static final String USER_LOGIN_2_REBECCA = "rebecca";
-    @Mock
-    GithubUserRestService githubUserRestService;
+    @Mock GithubUserRestService githubUserRestService;
 
     private UserRepository userRepository;
 
@@ -44,18 +43,15 @@ public class UserRepositoryImplTest {
 
     @Test
     public void searchUsers_200OkResponse_InvokesCorrectApiCalls() {
-        //Given
-        when(githubUserRestService.searchGithubUsers(anyString())).thenReturn(
-                Observable.just(githubUserList()));
-        when(githubUserRestService.getUser(anyString()))
-                .thenReturn(Observable.just(user1FullDetails()),
-                        Observable.just(user2FullDetails()));
+        // Given
+        when(githubUserRestService.searchGithubUsers(anyString())).thenReturn(Observable.just(githubUserList()));
+        when(githubUserRestService.getUser(anyString())).thenReturn(Observable.just(user1FullDetails()), Observable.just(user2FullDetails()));
 
-        //When
+        // When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
         userRepository.searchUsers(USER_LOGIN_LOOPYZORT).subscribe(subscriber);
 
-        //Then
+        // Then
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
 
@@ -86,7 +82,7 @@ public class UserRepositoryImplTest {
     private User user1FullDetails() {
         User user = new User();
         user.setLogin(USER_LOGIN_LOOPYZORT);
-        user.setName("Rigs Franks");
+        user.setName("Loopy Zort");
         user.setAvatarUrl("avatar_url");
         user.setBio("Bio1");
         return user;
